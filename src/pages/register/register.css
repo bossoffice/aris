@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css?family=Kanit&display=swap");
+
+.body {
+  height: 100vh;
+}
+.center {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.paper {
+  display: flex;
+  width: 400px;
+  height: 400px;
+  padding: 50px;
+  /* border: 1px solid white; */
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px rgb(228, 228, 228);
+  align-items: center;
+  flex-direction: column;
+}
+.form_header {
+  display: flex;
+  flex: 2;
+  font-family: "Kanit", sans-serif;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text_header {
+  font-size: 40px;
+  margin: 0;
+  /* font-family: "Kanit", sans-serif; */
+}
+
+.text_label {
+  font-size: 15px;
+  color: rgb(147, 147, 147);
+  margin: 0 0 40px 0;
+  /* font-family: "Kanit", sans-serif; */
+}
+
+.form {
+  display: flex;
+  flex: 6;
+  font-family: "Kanit", sans-serif;
+  width: 100%;
+  /* min-height: 20vh;
+  max-width: 20vw; */
+  /* justify-content: space-evenly; */
+  flex-direction: column;
+}
+
+.input_bundle {
+  display: flex;
+  align-self: center;
+  width: 80%;
+  flex-direction: column;
+}
+
+.input_label {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.input_input {
+  font-family: "Kanit", sans-serif;
+  padding: 10px;
+  border: 1px solid rgb(224, 224, 224);
+}
+.input::placeholder {
+  color: rgb(183, 183, 183);
+}
+
+.next_button {
+  display: flex;
+  flex: 1;
+  justify-self: flex-end;
+  align-self: flex-end;
+}
+
+.button {
+  border: none;
+  border-radius: 50px;
+  color: white;
+  background-color: rgb(232, 23, 124);
+  font-family: "Kanit", sans-serif;
+  padding: 10px;
+  width: 100px;
+}
+
+.input_one {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.input_one > input {
+  font-family: "Kanit", sans-serif;
+  font-size: 15px;
+  text-align: center;
+  max-width: 10px;
+  padding: 10px;
+  border: 1px solid rgb(224, 224, 224);
+}
+.input_one > input::placeholder {
+  color: rgb(183, 183, 183);
+}
+
+.result {
+  display: flex;
+  flex: 6;
+  width: 100%;
+  font-family: "Kanit", sans-serif;
+  font-size: 20px;
+  flex-direction: column;
+}
+
+.result > div {
+  display: flex;
+  margin: 10px 0;
+  /* flex-direction: row; */
+}
+
+.result > div > p {
+  margin: 0px;
+}
