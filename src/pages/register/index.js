@@ -59,7 +59,9 @@ function Register() {
         setPermisNext(true)
       }
     } else {
-      setPermisNext(false)
+      if (verifyState === 1) {
+        setPermisNext(false)
+      }
     }
   }, [name, tel, verifyState])
 
