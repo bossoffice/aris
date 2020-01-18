@@ -1,0 +1,11 @@
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.padder {
+  width: 500px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
