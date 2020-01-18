@@ -10,7 +10,11 @@ let Header = props => (
 
 let NextButton = props => (
   <div className="next_button">
-    <button className="button" onClick={props.onClick}>
+    <button
+      className="button"
+      onClick={props.onClick}
+      disabled={!props.permisNext}
+    >
       {props.text}
     </button>
   </div>
@@ -52,90 +56,59 @@ function Register() {
     5: ""
   })
 
-  useEffect(() => {
-    if (name && tel.length === 10 && tel.match(/0\d+\b/g)) {
-      if (verifyState === 1) {
-        // console.log("canclick")
-        setPermisNext(true)
-      }
-    } else {
-      if (verifyState === 1) {
-        setPermisNext(false)
-      }
-    }
-  }, [name, tel, verifyState])
-
   let goNext = () => {
     if (permisNext === true) {
-      setPermisNext(false)
+      // setPermisNext(false)
       setVerifyState(verifyState + 1)
     }
   }
 
-  useEffect(() => {
-    let full_otp = ""
+  let getValue = obj => {
+    let result = ""
     for (let i = 0; i < 6; i++) {
-      full_otp = full_otp + otp[i]
+      result = result + obj[i]
     }
-    if (
-      full_otp.length === 6 &&
-      full_otp.match(/\d+/g) &&
-      full_otp === "102938"
-    ) {
-      if (verifyState === 2) {
+    return result
+  }
+  useEffect(() => {
+    if (verifyState === 1) {
+      if (name && tel.length === 10) {
+        console.log(`${verifyState} can next `)
         setPermisNext(true)
+      } else {
+        console.log(`${verifyState} can't next `)
+        setPermisNext(false)
       }
-    } else {
-      if (verifyState === 2) {
+    } else if (verifyState === 2) {
+      console.log(getValue(otp))
+      if (getValue(otp).length === 6 && getValue(otp) === "102938") {
+        console.log(`${verifyState} can next `)
+        setPermisNext(true)
+      } else {
+        console.log(`${verifyState} can't next `)
+        setPermisNext(false)
+      }
+    } else if (verifyState === 3) {
+      if (getValue(pin).length === 6) {
+        console.log(`${verifyState} can next `)
+        setPermisNext(true)
+      } else {
+        console.log(`${verifyState} can't next `)
+        setPermisNext(false)
+      }
+    } else if (verifyState === 4) {
+      if (
+        getValue(confirmPin).length === 6 &&
+        getValue(confirmPin) === getValue(pin)
+      ) {
+        console.log(`${verifyState} can next `)
+        setPermisNext(true)
+      } else {
+        console.log(`${verifyState} can't next `)
         setPermisNext(false)
       }
     }
-  }, [otp, verifyState])
-
-  useEffect(() => {
-    let full_pin = ""
-    for (let i = 0; i < 6; i++) {
-      full_pin = full_pin + pin[i]
-    }
-    if (
-      full_pin.length === 6 &&
-      full_pin.match(/\d+/g)
-      // &&  full_otp === "102938"
-    ) {
-      if (verifyState === 3) {
-        setPermisNext(true)
-      }
-    } else {
-      if (verifyState === 3) {
-        // setPermisNext(false)
-        setPermisNext(false)
-      }
-    }
-  }, [pin, verifyState])
-
-  useEffect(() => {
-    let full_confirmPin = ""
-    let full_pin = ""
-    for (let i = 0; i < 6; i++) {
-      full_pin = full_pin + pin[i]
-    }
-    for (let i = 0; i < 6; i++) {
-      full_confirmPin = full_confirmPin + confirmPin[i]
-    }
-    if (
-      full_confirmPin.length === 6 &&
-      full_confirmPin.match(/\d+/g) &&
-      full_confirmPin === full_pin
-    ) {
-      if (verifyState === 4) {
-        setPermisNext(true)
-      }
-    } else {
-      if (verifyState === 4) {
-        setPermisNext(false)
-      }
-    }
-  }, [pin, confirmPin, verifyState])
+  }, [tel, name, otp, pin, confirmPin, verifyState])
 
   let inputOTP = (index, value) => {
     setOtp({ ...otp, [index]: value })
@@ -147,13 +120,6 @@ function Register() {
     setConfirmPin({ ...confirmPin, [index]: value })
   }
 
-  let getPin = pin => {
-    let pinText = ""
-    for (let i = 0; i < 6; i++) {
-      pinText += pin[i] ? pin[i] : ""
-    }
-    return pinText
-  }
   return (
     <div className="body">
       <div className="center">
@@ -186,12 +152,20 @@ function Register() {
                   value={tel}
                   maxLength={10}
                   onChange={e => {
-                    setTel(e.target.value)
+                    if (e.target.value.match(/^0+\d*$/)) {
+                      setTel(e.target.value)
+                    } else if (e.target.value === "") {
+                      setTel(e.target.value)
+                    }
                   }}
                 ></input>
               </div>
             </form>
-            <NextButton text="ต่อไป" onClick={goNext}></NextButton>
+            <NextButton
+              text="ต่อไป"
+              onClick={goNext}
+              permisNext={permisNext}
+            ></NextButton>
           </div>
         )}
         {verifyState === 2 && (
@@ -210,9 +184,14 @@ function Register() {
                 ></InputOne>
               </div>
             </form>
-            <NextButton text="ต่อไป" onClick={goNext}></NextButton>
+            <NextButton
+              text="ต่อไป"
+              onClick={goNext}
+              permisNext={permisNext}
+            ></NextButton>
           </div>
         )}
+
         {verifyState === 3 && (
           <div className="paper">
             <Header
@@ -221,7 +200,7 @@ function Register() {
             ></Header>
             <form className="form">
               <div className="input_bundle">
-                {/* <label className="input_label">กรุณาระบุ OTP</label> */}
+                <label className="input_label">กรุณาระบุ OTP</label>
                 <InputOne
                   inputLength={6}
                   value={pin}
@@ -229,15 +208,20 @@ function Register() {
                 ></InputOne>
               </div>
             </form>
-            <NextButton text="ต่อไป" onClick={goNext}></NextButton>
+            <NextButton
+              text="ต่อไป"
+              onClick={goNext}
+              permisNext={permisNext}
+            ></NextButton>
           </div>
         )}
+
         {verifyState === 4 && (
           <div className="paper">
             <Header headerText="ตั้ง PIN" labelText={`ระบุอีกครั้ง`}></Header>
             <form className="form">
               <div className="input_bundle">
-                {/* <label className="input_label">กรุณาระบุ OTP</label> */}
+                <label className="input_label">กรุณาระบุ OTP</label>
                 <InputOne
                   inputLength={6}
                   value={confirmPin}
@@ -245,9 +229,14 @@ function Register() {
                 ></InputOne>
               </div>
             </form>
-            <NextButton text="ต่อไป" onClick={goNext}></NextButton>
+            <NextButton
+              text="ต่อไป"
+              onClick={goNext}
+              permisNext={permisNext}
+            ></NextButton>
           </div>
         )}
+
         {verifyState === 5 && (
           <div className="paper" style={{ boxShadow: "none" }}>
             <Header headerText="ข้อมูลสมาชิก"></Header>
@@ -262,7 +251,7 @@ function Register() {
               </div>
               <div>
                 <p>PIN&nbsp;:&nbsp;</p>
-                <p>{getPin(pin)}</p>
+                <p>{getValue(pin)}</p>
               </div>
             </div>
           </div>

@@ -90,7 +90,11 @@
   padding: 10px;
   width: 100px;
 }
-
+.button:disabled {
+  color: white;
+  background-color: rgb(218, 123, 169);
+  font-family: "Kanit", sans-serif;
+}
 .input_one {
   display: flex;
   justify-content: space-evenly;
