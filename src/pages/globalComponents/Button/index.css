@@ -1,0 +1,16 @@
+.next_button {
+  display: flex;
+  flex: 1;
+  justify-self: flex-end;
+  align-self: flex-end;
+}
+
+.button {
+  border: none;
+  border-radius: 50px;
+  color: white;
+  background-color: rgb(232, 23, 124);
+  font-family: "Kanit", sans-serif;
+  padding: 10px;
+  width: 100px;
+}
